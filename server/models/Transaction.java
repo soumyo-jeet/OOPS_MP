@@ -2,7 +2,7 @@ package models;
 
 import utils.TransactionTypeEnum;
 
-public abstract class Transaction {
+public class Transaction {
     
     private int id;
     private double amount;
