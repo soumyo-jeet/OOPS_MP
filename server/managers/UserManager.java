@@ -12,15 +12,14 @@ public class UserManager {
     public void addNewUser (String username, String password) {
         User user = userRepository.findUserByUsername(username);
         if(user != null) {
-            System.err.println("User already exists.");
             System.out.println(user);
-            return;
+            throw new RuntimeException("User with this username already exists.");
         }
 
         user = new User(username, password);
         int res = userRepository.registerUser(user);
         if(res == 1) System.out.println("User registered");
-        else System.err.println("Something went wrong");
+        else throw new RuntimeException("Diary registration failed");
     }
 
     public User authenticateUser (User user) {
@@ -29,7 +28,6 @@ public class UserManager {
             System.out.println(existedUser);
             return existedUser;
         }
-        else System.err.println("Invalid credentials");
-        return null;
+        throw new RuntimeException("Invalid credentials.");
     }
 }

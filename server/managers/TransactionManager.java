@@ -15,22 +15,28 @@ public class TransactionManager {
 
 
     public void handleExp (Diary d, double amt, String date, String msg) {
+        if(amt <= 0) {
+            throw new RuntimeException("Invalid amount.");
+        }
+
         Expense ex = new Expense(amt, date, msg);
         int res = transactionRepository.createNewTxn(d, ex);
         if(res == 0) {
-            System.err.println("Transaction recording failed.");
-            return;
+            throw new RuntimeException("Transaction recording failed.");
         }
         System.out.println(ex);
         diaryManager.recordTransaction(d, ex);
     }
 
     public void handleIncm (Diary d, double amt, String date, String msg) {
+        if(amt <= 0) {
+            throw new RuntimeException("Invalid amount.");
+        }
+        
         Income inc = new Income(amt, date, msg);
         int res = transactionRepository.createNewTxn(d, inc);
         if(res == 0) {
-            System.err.println("Transaction recording failed.");
-            return;
+            throw new RuntimeException("Transaction recording failed.");
         }
         System.out.println(inc);
         diaryManager.recordTransaction(d, inc);

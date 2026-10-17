@@ -15,16 +15,20 @@ public class DiaryManager {
     }
 
     public void addNewDiary (int mon, int year, double expIncome, double budget) {
-        if(year <= 1800 || year >= 2099 || mon < 1 || mon > 12 || budget <= 0 || expIncome <= 0) {
-            System.err.println("Invalid arguments");
-            return;
+        if(year <= 2000 || year >= 2999 || mon < 1 || mon > 12 || budget <= 0 || expIncome <= 0) {
+            throw new RuntimeException("Invalid arguments.Please try again.");
         }
 
+        Diary existedDiary = diaryRepository.findDiaryByUserMonYr(user, mon, year);
+        if(existedDiary != null) {
+            throw new RuntimeException("Diary for this month is already present, please open it to write new transactions.");
+        }
+        
         Diary d = new Diary(mon, year, expIncome, budget);
         int res = diaryRepository.createNewDiary(user, d);
         
         if(res == 1) System.out.println("Diary created successfully.");
-        else System.err.println("creation failed");
+        else throw new RuntimeException("Diary creation failed.");
     }
 
     public Diary openDiary (int mon, int year) {
@@ -34,9 +38,9 @@ public class DiaryManager {
             System.out.println("Diary opened: ");
             System.out.println(existedDiary);
             return existedDiary;
-        } else System.err.println("Not found");
+        }
 
-        return null;
+        throw new RuntimeException("Diary not found.Please create new one");
     }
 
     public List<Diary> getAll() {

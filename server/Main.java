@@ -8,6 +8,8 @@ import models.User;
 import repositories.DiaryRepository;
 import repositories.TransactionRepository;
 import repositories.UserRepository;
+
+// THIS IS FOR TESTING PURPOSE
 public class Main {
     public static void main(String[] args) {
         // User user = new User("soumyo", "pass");
@@ -36,7 +38,7 @@ public class Main {
         User authenticatedUser = userManager.authenticateUser(new User("soumyo", "jeet"));
         
         DiaryManager diaryManager = new DiaryManager(authenticatedUser, new DiaryRepository());
-        // diaryManager.addNewDiary(3, 2026, 10000, 5000);
+        diaryManager.addNewDiary(3, 2026, 10000, 5000);
         Diary diary = diaryManager.openDiary(3, 2026);
 
         List<Diary> diaries = diaryManager.getAll();
