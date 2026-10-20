@@ -4,12 +4,28 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.io.File;
 
 public class Database {
     private static final String URL =
-        "jdbc:sqlite:../database/expense_tracker.db";
+            "jdbc:sqlite:" + findDatabaseFile();
+    private static String findDatabaseFile() {
+        String[] candidates = {
+                "database/expense_tracker.db",
+                "../database/expense_tracker.db"
+        };
+        for (String path : candidates) {
+            File f = new File(path);
+            if (f.exists()) {
+                return f.getAbsolutePath();
+            }
+        }
+        // Not found: use the most likely location so the error message shows the path
+        return new File("../database/expense_tracker.db").getAbsolutePath();
+    }
 
-public static Connection getConnection()
+
+    public static Connection getConnection()
         throws SQLException {
 
     Connection con = DriverManager.getConnection(URL);
