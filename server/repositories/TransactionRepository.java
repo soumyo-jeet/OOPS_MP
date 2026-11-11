@@ -61,7 +61,8 @@ public class TransactionRepository {
             }
            
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalStateException(
+                    "Could not retrieve transactions for diary " + diary.getId(), e);
         }
         return txs;
     }
