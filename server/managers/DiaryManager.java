@@ -58,4 +58,15 @@ public class DiaryManager {
 
         System.out.println("New transaction noted on\n" + d);
     }
+    public Diary openDiaryById(int diaryId) {
+        Diary diary = diaryRepository.findDiaryById(user, diaryId);
+
+        if (diary == null) {
+            throw new RuntimeException("Diary not found.");
+        }
+
+        System.out.println("Diary opened: " + diary);
+
+        return diary;
+    }
 }
