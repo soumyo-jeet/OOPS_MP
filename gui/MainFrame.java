@@ -60,7 +60,7 @@ public class MainFrame extends JFrame {
 
         setTitle("Expense Tracker - " + user.getUsername());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(1000, 680);
+        setSize(1200, 680);
         setMinimumSize(new Dimension(900, 600));
         setLocationRelativeTo(null);
 
