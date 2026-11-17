@@ -212,17 +212,37 @@ public class MainFrame extends JFrame {
     }
 
     private void openDiary() {
-        try {
-            int month = (Integer) monthBox.getSelectedItem();
-            int year = Integer.parseInt(yearField.getText().trim());
 
-            currentDiary = diaryManager.openDiary(month, year);
-            refreshScreen();
+        List<Diary> diaries = diaryManager.getAll();
+        if (diaries.isEmpty()) {
+            showError("You haven't created any diaries yet.");
+            return;
+        }
+        JComboBox<String> diaryComboBox = new JComboBox<>();
+        for (Diary diary : diaries) {
+            diaryComboBox.addItem(diary.getDisplay());
+        }
+        int choice = JOptionPane.showConfirmDialog(
+            this,
+            diaryComboBox,
+            "Select a Diary to Open",
+            JOptionPane.OK_CANCEL_OPTION,
+            JOptionPane.PLAIN_MESSAGE
+        );
+        if (choice == JOptionPane.OK_OPTION) {
+            Diary selectedDiary = (Diary) diaryComboBox.getSelectedItem();
+            if (selectedDiary != null) {
+                try {
+                    currentDiary = diaryManager.openDiaryById(
+                        selectedDiary.getId()
+                    );
 
-        } catch (NumberFormatException ex) {
-            showError("Year must be a number.");
-        } catch (RuntimeException ex) {
-            showError(ex.getMessage());
+                    refreshScreen();
+
+                } catch (RuntimeException ex) {
+                    showError(ex.getMessage());
+                }
+            }
         }
     }
 

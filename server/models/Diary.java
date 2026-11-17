@@ -101,5 +101,8 @@ public class Diary {
                 budget left: %f
                 """.formatted(this.id, this.mon, this.year, this.expIncome, this.budget, this.balance, this.budgetLeft);
     }
+    public String getDisplay(){
+        return "Month: "+this.mon+" Year: "+this.year;
+    }
     
 }

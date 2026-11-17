@@ -127,4 +127,38 @@ public class DiaryRepository {
         }
         return diaries;
     }
+    public Diary findDiaryById(User user, int diaryId) {
+    String sql = """
+                SELECT * FROM diaries
+                WHERE user_id = ? AND id = ?
+                """;
+
+    try (
+        Connection conn = Database.getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql)
+    ) {
+        ps.setInt(1, user.getId());
+        ps.setInt(2, diaryId);
+
+        ResultSet res = ps.executeQuery();
+
+        if (res.next()) {
+            Diary diary = new Diary(0, 0, 0, 0);
+
+            diary.setId(res.getInt("id"));
+            diary.setMon(res.getInt("month"));
+            diary.setYear(res.getInt("year"));
+            diary.setExpIncome(res.getDouble("expected_income"));
+            diary.setBudget(res.getDouble("budget"));
+            diary.setBudgetLeft(res.getDouble("budget_left"));
+            diary.setBalance(res.getDouble("balance"));
+
+            return diary;
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return null;
+}
 }
