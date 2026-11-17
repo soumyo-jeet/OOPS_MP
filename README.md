@@ -52,20 +52,16 @@ OOPS_MP-main/
 Navigate to the root directory (`OOPS_MP-main`) and compile the source files:
 
 ```bash
-javac -d out -cp "lib/*" gui/*.java server/*.java server/managers/*.java server/models/*.java server/repositories/*.java server/utils/*.java
+javac -cp "..\lib\*" -sourcepath ".;.." -d bin Main.java
 ```
 
 Run the compiled application:
 
 **Windows:**
 ```bash
-java -cp "out;lib/*" server.Main
+java -cp "bin;..\lib\*" Main
 ```
 
-**macOS / Linux:**
-```bash
-java -cp "out:lib/*" server.Main
-```
 
 ## Architecture Notes
 
